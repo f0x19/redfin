@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Details - RealEstate</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-home"></i>
+                <span>RealEstate</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/">Buy</a></li>
+                <li><a href="#sell">Sell</a></li>
+                <li><a href="#rent">Rent</a></li>
+                <li><a href="#agents">Agents</a></li>
+                <li><a href="/">
+                    <i class="far fa-heart"></i> Favorites
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Property Detail Content -->
+    <div class="property-detail-container">
+        <div class="loading" id="loadingSpinner">
+            <i class="fas fa-spinner fa-spin"></i> Loading property details...
+        </div>
+        
+        <div id="propertyDetail" style="display: none;">
+            <!-- Back Button -->
+            <div class="container">
+                <a href="/" class="back-button">
+                    <i class="fas fa-arrow-left"></i> Back to Search
+                </a>
+            </div>
+
+            <!-- Image Gallery -->
+            <section class="property-gallery">
+                <div class="main-image">
+                    <img id="mainImage" src="" alt="Property">
+                    <button class="favorite-btn-large" onclick="toggleFavorite()">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Property Info -->
+            <section class="property-info-section">
+                <div class="container">
+                    <div class="property-layout">
+                        <!-- Main Info -->
+                        <div class="property-main">
+                            <div class="property-header">
+                                <div>
+                                    <h1 id="propertyTitle"></h1>
+                                    <p class="property-address">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span id="propertyAddress"></span>
+                                    </p>
+                                </div>
+                                <div class="property-price" id="propertyPrice"></div>
+                            </div>
+
+                            <div class="property-stats">
+                                <div class="stat">
+                                    <i class="fas fa-bed"></i>
+                                    <span id="bedrooms"></span>
+                                    <small>Bedrooms</small>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-bath"></i>
+                                    <span id="bathrooms"></span>
+                                    <small>Bathrooms</small>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-ruler-combined"></i>
+                                    <span id="squareFeet"></span>
+                                    <small>Sq Ft</small>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-home"></i>
+                                    <span id="propertyType"></span>
+                                    <small>Type</small>
+                                </div>
+                            </div>
+
+                            <div class="property-description">
+                                <h2>About This Home</h2>
+                                <p id="propertyDescription"></p>
+                            </div>
+
+                            <div class="property-features">
+                                <h2>Property Details</h2>
+                                <div class="features-grid">
+                                    <div class="feature-item">
+                                        <strong>Year Built:</strong>
+                                        <span id="yearBuilt"></span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <strong>Lot Size:</strong>
+                                        <span id="lotSize"></span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <strong>Property Type:</strong>
+                                        <span id="propertyTypeDetail"></span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <strong>Status:</strong>
+                                        <span id="propertyStatus" class="status-badge"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar -->
+                        <div class="property-sidebar">
+                            <div class="contact-card">
+                                <h3>Contact Agent</h3>
+                                <form class="contact-form" onsubmit="submitContactForm(event)">
+                                    <input type="text" placeholder="Your Name" required>
+                                    <input type="email" placeholder="Your Email" required>
+                                    <input type="tel" placeholder="Your Phone">
+                                    <textarea placeholder="Message" rows="4" required>I'm interested in this property. Please contact me with more information.</textarea>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-envelope"></i> Send Message
+                                    </button>
+                                </form>
+                                
+                                <div class="contact-options">
+                                    <button class="btn btn-secondary">
+                                        <i class="fas fa-phone"></i> Call Agent
+                                    </button>
+                                    <button class="btn btn-secondary">
+                                        <i class="fas fa-calendar"></i> Schedule Tour
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="mortgage-calculator">
+                                <h3>Mortgage Calculator</h3>
+                                <div class="calculator-inputs">
+                                    <div class="input-group">
+                                        <label>Home Price</label>
+                                        <input type="number" id="homePrice" value="0">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>Down Payment (%)</label>
+                                        <input type="number" id="downPayment" value="20" min="0" max="100">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>Interest Rate (%)</label>
+                                        <input type="number" id="interestRate" value="6.5" step="0.1">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>Loan Term (years)</label>
+                                        <select id="loanTerm">
+                                            <option value="15">15 years</option>
+                                            <option value="30" selected>30 years</option>
+                                        </select>
+                                    </div>
+                                    <button class="btn btn-secondary" onclick="calculateMortgage()">
+                                        Calculate
+                                    </button>
+                                </div>
+                                <div class="calculator-result" id="mortgageResult" style="display: none;">
+                                    <h4>Estimated Monthly Payment</h4>
+                                    <div class="monthly-payment" id="monthlyPayment"></div>
+                                    <p class="calculator-note">* This is an estimate. Actual payment may vary.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>RealEstate</h3>
+                    <p>Your trusted partner in finding the perfect home</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 RealEstate. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/property_detail.js') }}"></script>
+</body>
+</html>
