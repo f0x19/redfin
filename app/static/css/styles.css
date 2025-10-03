@@ -1,0 +1,26 @@
+*{box-sizing:border-box}
+:root{--bg:#0b1017;--surface:#101826;--muted:#6b7280;--text:#e5e7eb;--primary:#22c55e;--card:#0f172a}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+.container{max-width:1120px;margin:0 auto;padding:0 16px}
+.site-header{position:sticky;top:0;background:var(--surface);border-bottom:1px solid #1f2937;z-index:10}
+.logo{color:#fff;text-decoration:none;font-weight:700;font-size:20px;margin-right:16px}
+.search-form{display:flex;gap:8px;align-items:center;padding:12px 0}
+.search-form input,.search-form select{background:#0b1220;border:1px solid #1f2937;color:#fff;padding:10px 12px;border-radius:8px}
+.search-form button{background:linear-gradient(135deg,#22c55e,#16a34a);border:none;color:#0b1017;padding:10px 14px;border-radius:8px;font-weight:700;cursor:pointer}
+.filters{background:var(--surface);border:1px solid #1f2937;border-radius:12px;margin:16px 0}
+.filter-row{display:flex;flex-wrap:wrap;gap:8px;padding:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin:16px 0}
+.card{background:var(--card);border:1px solid #1f2937;border-radius:12px;overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column}
+.card-image{background:#0b1220;height:180px;background-size:cover;background-position:center}
+.card-body{padding:12px}
+.price{font-weight:800;font-size:18px}
+.meta{color:var(--muted);font-size:14px;margin-top:4px}
+.address{margin-top:6px;font-size:14px}
+.pagination{display:flex;justify-content:center;align-items:center;gap:12px;margin:20px 0}
+.pagination a{color:#fff;text-decoration:none;padding:8px 12px;border:1px solid #1f2937;border-radius:8px}
+.site-footer{margin:40px 0;color:var(--muted)}
+.detail{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;margin:24px 0}
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.gallery img{width:100%;border-radius:12px;border:1px solid #1f2937}
+.summary .description{color:#cbd5e1;line-height:1.6}
+@media (max-width:900px){.detail{grid-template-columns:1fr}.gallery{grid-template-columns:1fr}}
