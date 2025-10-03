@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RealEstate - Find Your Dream Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-home"></i>
+                <span>RealEstate</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/" class="active">Buy</a></li>
+                <li><a href="#sell">Sell</a></li>
+                <li><a href="#rent">Rent</a></li>
+                <li><a href="#agents">Agents</a></li>
+                <li><a href="#" id="favoritesLink">
+                    <i class="far fa-heart"></i> Favorites
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="hero-title">Find Your Dream Home</h1>
+            <p class="hero-subtitle">Search from thousands of properties across the country</p>
+            
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <div class="search-input-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Enter city, address, or ZIP code">
+                </div>
+                <button class="btn btn-primary" onclick="searchProperties()">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="filters-section">
+        <div class="container">
+            <div class="filters-toggle" onclick="toggleFilters()">
+                <i class="fas fa-sliders-h"></i>
+                <span>More Filters</span>
+            </div>
+            
+            <div class="filters" id="filtersPanel">
+                <div class="filter-group">
+                    <label>Price Range</label>
+                    <div class="filter-row">
+                        <input type="number" id="minPrice" placeholder="Min Price">
+                        <span>-</span>
+                        <input type="number" id="maxPrice" placeholder="Max Price">
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Bedrooms</label>
+                    <select id="bedrooms">
+                        <option value="">Any</option>
+                        <option value="1">1+</option>
+                        <option value="2">2+</option>
+                        <option value="3">3+</option>
+                        <option value="4">4+</option>
+                        <option value="5">5+</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Bathrooms</label>
+                    <select id="bathrooms">
+                        <option value="">Any</option>
+                        <option value="1">1+</option>
+                        <option value="2">2+</option>
+                        <option value="3">3+</option>
+                        <option value="4">4+</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Property Type</label>
+                    <select id="propertyType">
+                        <option value="">All Types</option>
+                        <option value="Single Family">Single Family</option>
+                        <option value="Condo">Condo</option>
+                        <option value="Townhouse">Townhouse</option>
+                        <option value="Loft">Loft</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label>City</label>
+                    <input type="text" id="cityFilter" placeholder="Enter city">
+                </div>
+                
+                <button class="btn btn-secondary" onclick="applyFilters()">Apply Filters</button>
+                <button class="btn btn-text" onclick="clearFilters()">Clear All</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Properties Grid -->
+    <section class="properties-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Available Properties</h2>
+                <div class="results-count" id="resultsCount"></div>
+            </div>
+            
+            <div class="loading" id="loadingSpinner">
+                <i class="fas fa-spinner fa-spin"></i> Loading properties...
+            </div>
+            
+            <div class="properties-grid" id="propertiesGrid">
+                <!-- Properties will be dynamically loaded here -->
+            </div>
+            
+            <div class="no-results" id="noResults" style="display: none;">
+                <i class="fas fa-home"></i>
+                <p>No properties found matching your criteria</p>
+                <button class="btn btn-primary" onclick="clearFilters()">Clear Filters</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>RealEstate</h3>
+                    <p>Your trusted partner in finding the perfect home</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Guides</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 RealEstate. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
