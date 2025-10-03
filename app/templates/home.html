@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}OpenHomes — Find Your Home{% endblock %}
+{% block content %}
+<section class="filters">
+  <div class="filter-row">
+    <label>Price</label>
+    <input type="number" id="min_price" placeholder="Min" min="0" />
+    <input type="number" id="max_price" placeholder="Max" min="0" />
+
+    <label>Beds</label>
+    <input type="number" id="min_bed" placeholder="Min" min="0" />
+    <input type="number" id="max_bed" placeholder="Max" min="0" />
+
+    <label>Baths</label>
+    <input type="number" id="min_bath" placeholder="Min" step="0.5" min="0" />
+    <input type="number" id="max_bath" placeholder="Max" step="0.5" min="0" />
+
+    <label>Type</label>
+    <select id="type">
+      <option value="">Any</option>
+      <option value="house">House</option>
+      <option value="condo">Condo</option>
+      <option value="townhouse">Townhouse</option>
+      <option value="apartment">Apartment</option>
+    </select>
+
+    <button id="applyFilters">Apply</button>
+  </div>
+</section>
+
+<section id="results" class="grid">
+  {% for p in properties %}
+  <a class="card" href="/properties/{{ p.id }}">
+    <div class="card-image" style="background-image:url('{{ p.images[0].url if p.images else 'https://picsum.photos/640/420?grayscale' }}')"></div>
+    <div class="card-body">
+      <div class="price">${{ '{:,}'.format(p.price) }}</div>
+      <div class="meta">{{ p.bedrooms }} bd • {{ p.bathrooms }} ba • {{ p.square_feet or '?' }} sqft</div>
+      <div class="address">{{ p.address_line }}, {{ p.city }}, {{ p.state }} {{ p.zipcode }}</div>
+    </div>
+  </a>
+  {% endfor %}
+</section>
+
+{% if pagination.pages > 1 %}
+<nav class="pagination">
+  {% if pagination.has_prev %}
+  <a href="?page={{ pagination.prev_num }}" class="prev">Prev</a>
+  {% endif %}
+  <span>Page {{ pagination.page }} of {{ pagination.pages }}</span>
+  {% if pagination.has_next %}
+  <a href="?page={{ pagination.next_num }}" class="next">Next</a>
+  {% endif %}
+</nav>
+{% endif %}
+{% endblock %}

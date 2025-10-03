@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}{{ property.title }} — OpenHomes{% endblock %}
+{% block content %}
+<article class="detail">
+  <div class="gallery">
+    {% if property.images %}
+      {% for img in property.images %}
+        <img src="{{ img.url }}" alt="Photo of {{ property.title }}" />
+      {% endfor %}
+    {% else %}
+      <img src="https://picsum.photos/960/600?grayscale" alt="Placeholder" />
+    {% endif %}
+  </div>
+  <div class="summary">
+    <h1>{{ property.title }}</h1>
+    <div class="price">${{ '{:,}'.format(property.price) }}</div>
+    <div class="meta">{{ property.bedrooms }} bd • {{ property.bathrooms }} ba • {{ property.square_feet or '?' }} sqft</div>
+    <div class="address">{{ property.address_line }}, {{ property.city }}, {{ property.state }} {{ property.zipcode }}</div>
+    <p class="description">{{ property.description }}</p>
+  </div>
+</article>
+{% endblock %}
